@@ -7,6 +7,7 @@ const logger = require("morgan");
 const knex = require("./db/knex");
 
 const ttimes = require("./routes/ttimesRoutes");
+const customers = require("./routes/customersRoutes");
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", ttimes);
+app.use("/", customers);
 
 app.listen(port, function() {
   console.log("listening on port: ", port);
