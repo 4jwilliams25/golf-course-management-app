@@ -10,6 +10,13 @@ exports.getOneTtime = (req, res) => {
     .then(ttime => res.json(ttime));
 };
 
+exports.getAllTtimesCustomers = (req, res) => {
+  knex("ttimes")
+    .join("customers-ttimes", "customers-ttimes.tee_time_id", "=", "ttimes.id")
+    .where("ttimes.id", req.params.id)
+    .then(customers => res.json(customers));
+};
+
 exports.addTtime = (req, res) => {
   knex("ttimes")
     .insert(req.body)

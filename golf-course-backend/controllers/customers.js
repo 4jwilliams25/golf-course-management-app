@@ -10,6 +10,18 @@ exports.getOneCustomer = (req, res) => {
     .then(customer => res.json(customer));
 };
 
+exports.getOneCustomersTtimes = (req, res) => {
+  knex("customers")
+    .join(
+      "customers-ttimes",
+      "customers-ttimes.customer_id",
+      "=",
+      "customers.id"
+    )
+    .where("customers.id", req.params.id)
+    .then(ttimes => res.json(ttimes));
+};
+
 exports.addCustomer = (req, res) => {
   knex("customers")
     .insert(req.body)

@@ -8,6 +8,7 @@ const knex = require("./db/knex");
 
 const ttimes = require("./routes/ttimesRoutes");
 const customers = require("./routes/customersRoutes");
+const customers_ttimes = require("./routes/customers-ttimes-routes");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/", ttimes);
 app.use("/", customers);
+app.use("/", customers_ttimes);
 
 app.listen(port, function() {
   console.log("listening on port: ", port);

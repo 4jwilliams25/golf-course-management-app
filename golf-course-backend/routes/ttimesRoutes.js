@@ -4,6 +4,7 @@ const ttimesController = require("../controllers/ttimes");
 
 router.get("/ttimes", ttimesController.getAllTtimes);
 router.get("/ttimes/:id", ttimesController.getOneTtime);
+router.get("/ttimes/:id/customers", ttimesController.getAllTtimesCustomers);
 router.post("/ttimes", ttimesController.addTtime);
 router.patch("/ttimes/:id", ttimesController.updateTtime);
 router.delete("/ttimes/:id", ttimesController.removeTtime);
