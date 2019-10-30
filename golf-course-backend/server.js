@@ -24,6 +24,4 @@ app.use("/", ttimes);
 app.use("/", customers);
 app.use("/", customers_ttimes);
 
-app.listen(port, function() {
-  console.log("listening on port: ", port);
-});
+module.exports = { app };
