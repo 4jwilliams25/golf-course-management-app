@@ -4,11 +4,14 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 8000;
 const cors = require("cors");
 const logger = require("morgan");
-const knex = require("./db/knex");
+const knexInstance = require("./db/knex");
+const { Model } = require("objection");
 
 const ttimes = require("./routes/ttimesRoutes");
 const customers = require("./routes/customersRoutes");
 const customers_ttimes = require("./routes/customers-ttimes-routes");
+
+Model.knex(knexInstance);
 
 const app = express();
 

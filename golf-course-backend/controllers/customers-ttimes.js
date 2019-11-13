@@ -1,16 +1,26 @@
 const knex = require("../db/knex");
+const customerTtimes = require("../models/customers-ttimes");
+
+exports.getAllCustomerTtimes = (req, res) => {
+  customerTtimes.query().then(customerTtimes => {
+    res.json(customerTtimes);
+  });
+};
 
 exports.addCustomerToTtime = (req, res) => {
-  knex("customers-ttimes")
+  customerTtimes
+    .query()
     .insert(req.body)
     .returning("*")
-    .then(newAddition => res.json(newAddition));
+    .then(newAddition => res.json(newAddition))
+    .catch(err => res.json(err));
 };
 
 exports.removeCustomerFromTtime = (req, res) => {
-  knex("customers-ttimes")
-    .del()
-    .where("id", req.params.id)
+  customerTtimes
+    .query()
+    .deleteById(req.params.id)
     .returning("*")
-    .then(removedRez => res.json(removedRez));
+    .then(removedRez => res.json(removedRez))
+    .catch(err => res.json(err));
 };
