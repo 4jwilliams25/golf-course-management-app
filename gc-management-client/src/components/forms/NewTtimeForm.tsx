@@ -1,15 +1,41 @@
 import React from "react";
-import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
+import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
 
-class NewTtimeForm extends React.Component {
+type formProps = {
+  addTtime: any;
+};
+
+export interface newTtimeState {
+  date: string;
+  time: string;
+}
+
+class NewTtimeForm extends React.Component<formProps, newTtimeState> {
   state = {
-    NumberOfCustomers: 1 - 4
+    date: "",
+    time: ""
+  };
+
+  handleChange = (name: string, e: any) => {
+    this.setState({
+      ...this.state,
+      [name]: e.target.value
+    });
+  };
+
+  handleSubmit = (e: any) => {
+    e.preventDefault();
+    this.props.addTtime(`${this.state.date} ${this.state.time}`);
+    this.setState({
+      date: "",
+      time: ""
+    });
   };
 
   render() {
     return (
       <div>
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <Row>
             <Col>
               <FormGroup>
@@ -19,6 +45,8 @@ class NewTtimeForm extends React.Component {
                   name="date"
                   id="teeTime date"
                   placeholder="Ex: 11/01/2019"
+                  onChange={e => this.handleChange("date", e)}
+                  value={this.state.date}
                 />
               </FormGroup>
               <FormGroup>
@@ -28,26 +56,11 @@ class NewTtimeForm extends React.Component {
                   name="time"
                   id="teeTime"
                   placeholder="Ex: 5:30 PM"
+                  onChange={e => this.handleChange("time", e)}
+                  value={this.state.time}
                 />
               </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="customer">Customer 1:</Label>
-                <Input type="text" name="customer" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="customer">Customer 2:</Label>
-                <Input type="text" name="customer" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="customer">Customer 3:</Label>
-                <Input type="text" name="customer" />
-              </FormGroup>
-              <FormGroup>
-                <Label for="customer">Customer 4:</Label>
-                <Input type="text" name="customer" />
-              </FormGroup>
+              <Button color="success">Create New Tee Time</Button>
             </Col>
           </Row>
         </Form>

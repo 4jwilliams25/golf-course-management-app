@@ -23,19 +23,22 @@ import UpdateTtimeForm from "../forms/UpdateTtimeForm";
 type ItemProps = {
   key: number;
   ttime: any;
+  removeTtime: any;
 };
 
 const TtimeItem = (props: ItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   let { customers } = props.ttime;
-  const listOfCustomers: any = customers.map((customer: any, i: number) => {
-    return (
-      <CardSubtitle key={i} className="m-2">
-        {customer.name}
-      </CardSubtitle>
-    );
-  });
+  const listOfCustomers: any = customers
+    ? customers.map((customer: any, i: number) => {
+        return (
+          <CardSubtitle key={i} className="m-2">
+            {customer.name}
+          </CardSubtitle>
+        );
+      })
+    : [];
 
   return (
     <Router>
@@ -45,7 +48,19 @@ const TtimeItem = (props: ItemProps) => {
           onClick={toggle}
           style={{ marginBottom: "1rem" }}
         >
-          {props.ttime.time}
+          <Row>
+            <Col>{props.ttime.time}</Col>
+            <Col className="d-flex justify-content-end">
+              <Button
+                outline
+                size="sm"
+                color="danger"
+                onClick={() => props.removeTtime(props.ttime.id)}
+              >
+                x
+              </Button>
+            </Col>
+          </Row>
         </ListGroupItem>
         <Collapse isOpen={isOpen}>
           <Card>

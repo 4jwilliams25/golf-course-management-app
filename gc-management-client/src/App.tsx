@@ -26,12 +26,35 @@ class App extends React.Component<{}, MyState> {
     });
   }
 
+  addTtime = (ttime: string) => {
+    axios
+      .post("http://localhost:8000/ttimes", {
+        time: ttime
+      })
+      .then(res =>
+        this.setState({
+          ttimes: [res.data, ...this.state.ttimes]
+        })
+      );
+  };
+
+  removeTtime = (id: any) => {
+    axios.delete(`http://localhost:8000/ttimes/${id}`).then(res => {
+      let updatedTtimes = this.state.ttimes.filter(
+        (ttime: any) => ttime.id !== res.data.id
+      );
+      this.setState({
+        ttimes: updatedTtimes
+      });
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <TopNav />
-        <NewTtimeForm />
-        <TtimesList ttimes={this.state.ttimes} />
+        <NewTtimeForm addTtime={this.addTtime} />
+        <TtimesList ttimes={this.state.ttimes} removeTtime={this.removeTtime} />
       </div>
     );
   }
